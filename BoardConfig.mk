@@ -73,6 +73,7 @@ BOARD_HAVE_BLUETOOTH := true
 BOARD_CUSTOM_BLUEDROID := ../../../device/motorola/jordan/bluedroid.c
 
 BOARD_MASS_STORAGE_FILE_PATH := "/sys/devices/platform/usb_mass_storage/lun0/file"
+TARGET_USE_CUSTOM_LUN_FILE_PATH := "/sys/devices/platform/usb_mass_storage/lun0/file"
 
 BOARD_BOOTIMAGE_MAX_SIZE := $(call image-size-from-data-size,0x00280000)
 BOARD_RECOVERYIMAGE_MAX_SIZE := $(call image-size-from-data-size,0x00500000)
@@ -122,14 +123,14 @@ TARGET_CUSTOM_RELEASETOOL := ./device/motorola/jordan/releasetools/squisher
 # Jordan need 2nd-init binary from motorola common
 TARGET_NEEDS_MOTOROLA_HIJACK := true
 
-# In nighly builds only
-ifndef CYANOGEN_RELEASE
+# FM Radio
+BOARD_HAVE_FM_RADIO := true
+BOARD_FM_DEVICE := wl1271
+COMMON_GLOBAL_CFLAGS += -DHAVE_FM_RADIO
 
-#BOARD_HAVE_FM_RADIO := true
-#BOARD_FM_DEVICE := wl1271
-#TARGET_GLOBAL_CFLAGS += -DHAVE_FM_RADIO
-#TARGET_GLOBAL_CPPFLAGS += -DHAVE_FM_RADIO
-
+# Gingerbread kernel specifics
+ifeq ($(BOARD_DEFY_MODEL),DEFY_GINGER)
+BOARD_USE_CID_ROTATE_34 := true
 endif
 
 ## ICS specifics
@@ -151,4 +152,6 @@ TARGET_PROXIMITY_SENSOR_LIMIT := 0x1F
 
 BOARD_USES_AUDIO_LEGACY := true
 BOARD_USE_LEGACY_TOUCHSCREEN := true
+TARGET_PROVIDES_LIBAUDIO := true
+BOARD_USES_GPSSHIM := false
 

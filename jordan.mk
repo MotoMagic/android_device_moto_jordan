@@ -59,22 +59,27 @@ PRODUCT_COPY_FILES += \
 	frameworks/base/data/etc/android.hardware.sensor.light.xml:system/etc/permissions/android.hardware.sensor.light.xml \
 	frameworks/base/data/etc/android.hardware.sensor.proximity.xml:system/etc/permissions/android.hardware.sensor.proximity.xml \
 	frameworks/base/data/etc/android.hardware.touchscreen.multitouch.jazzhand.xml:system/etc/permissions/android.hardware.touchscreen.multitouch.jazzhand.xml \
-	frameworks/base/data/etc/android.software.sip.voip.xml:system/etc/permissions/android.software.sip.voip.xml
+	frameworks/base/data/etc/android.hardware.usb.host.xml:system/etc/permissions/android.hardware.usb.host.xml \
+	frameworks/base/data/etc/android.hardware.usb.accessory.xml:system/etc/permissions/android.hardware.usb.accessory.xml \
+	frameworks/base/data/etc/android.software.sip.voip.xml:system/etc/permissions/android.software.sip.voip.xml \
 
 # ICS sound
 PRODUCT_PACKAGES += \
-	hcitool \
+	hcitool hciattach hcidump \
 	libaudioutils audio.a2dp.default audio_policy.jordan \
-	libaudiohw_legacy audio.primary.omap3 camera.jordan libcamera
+	libaudiohw_legacy audio.primary.omap3
 
 # ICS graphics
 PRODUCT_PACKAGES += libGLESv2 libEGL libGLESv1_CM
 
 # TO FIX for ICS
-#PRODUCT_PACKAGES += gralloc.jordan hwcomposer.jordan overlay.omap3 libcamera
+#PRODUCT_PACKAGES += gralloc.jordan hwcomposer.jordan
 PRODUCT_PACKAGES += gralloc.default hwcomposer.default
 
-#Common packages (gingerbread/ics)
+# ICS Camera
+PRODUCT_PACKAGES += Camera overlay.omap3 camera.jordan libcamera libui
+
+# Common packages (gingerbread/ics)
 PRODUCT_PACKAGES += \
 	librs_jni \
 	tiwlan.ini \
@@ -104,6 +109,7 @@ PRODUCT_PACKAGES += \
 	hostapd.conf \
 	libhostapdcli \
 	bootmenu \
+	utility_lsof \
 	static_busybox \
 	hijack_boot_2nd-init \
 	DefyParts \
@@ -122,8 +128,10 @@ PRODUCT_PACKAGES += e2fsck
 # Add DroidSSHd (dropbear) Management App - tpruvot/android_external_droidsshd @ github
 PRODUCT_PACKAGES += DroidSSHd dropbear dropbearkey sftp-server scp ssh
 
-# Missing in CM9
-PRODUCT_PACKAGES += AndroidTerm DSPManager
+# CM9 apps
+PRODUCT_PACKAGES += AndroidTerm
+PRODUCT_PACKAGES += Trebuchet FileManager Torch
+#PRODUCT_PACKAGES += DSPManager libcyanogen-dsp
 
 # we have enough storage space to hold precise GC data
 PRODUCT_TAGS += dalvik.gc.type-precise
